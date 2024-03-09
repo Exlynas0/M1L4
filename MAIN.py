@@ -29,4 +29,4 @@ async def on_message(message):
     else:
         await message.channel.send(message.content)
 
-client.run("MTIxMzQ3MDYyMjkzNjYwNDc2Mg.GInWLn.4tD_UTH2LSKjXHkc8OjZN9DalfakJLLBY025eM")
+client.run("BOT TOKEN HERE")
