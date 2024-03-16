@@ -1,0 +1,59 @@
+import discord
+from Homework import *
+
+# Variabel intents menyimpan hak istimewa bot
+intents = discord.Intents.default()
+# Mengaktifkan hak istimewa message-reading
+intents.message_content = True
+# Membuat bot di variabel klien dan mentransfernya hak istimewa
+client = discord.Client(intents=intents)
+
+@client.event
+async def on_ready():
+    print(f'Kita telah masuk sebagai {client.user}')
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    if message.content.startswith('halo'):
+        await message.channel.send("Hi!")
+    elif message.content.startswith('Are you really the death?'):
+        await message.channel.send("Yes! I am, but i'm also a member here!")
+    elif message.content.startswith('$pass'):
+        await message.channel.send(gen_pass(10))
+    elif message.content.startswith('what type of weapon you like to use?'):
+        await message.channel.send("It's Axe, Knife, scythe, and a Bow!")
+    elif message.content.startswith('bye'):
+        await message.channel.send("Thank you for the talk!")
+    else:
+        await message.channel.send(message.content)
+
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print(f'Logged in as {self.user} (ID: {self.user.id})')
+        print('------')
+    async def on_member_join(self, member):
+        guild = member.guild
+        if guild.system_channel is not None:
+            to_send = f'Welcome {member.mention} to the graveyard!'
+            await guild.system_channel.send(to_send)
+
+class MyClient(discord.Client):
+    async def on_ready(self):
+        print(f'Logged in as {self.user} (ID: {self.user.id})')
+        print('------')
+
+    async def on_message(self, message):
+        # we do not want the bot to reply to itself
+        if message.author.id == self.user.id:
+            return
+
+        if message.content.startswith('!hello'):
+            await message.reply('Hello!', mention_author=True)
+
+intents = discord.Intents.default()
+intents.members = True
+
+client = MyClient(intents=intents)
+client.run("token")
